@@ -3,9 +3,6 @@ const axios = require('axios');
 
 const _ = require('dotenv').config();
 const app = express();
-const ip = require('ip');
-const client_ip = ip.address();
-
 
 const port = process.env.port || 9000;
 
@@ -19,14 +16,16 @@ const WEATHER_API_URL = process.env.WEATHER_API_URL;
 
 app.get('/', async (req, res) => {
     const visitorName = req.query.visitor_name || 'Dear';
-    // const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || req.ip;
-    const clientIp = ip.address();
+    const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || req.clientIp;
+   
+console.log("clientIp:",clientIp);
    
     
 
 try {
       // Get location based on IP
     const geoResponse = await axios.get(`${LOCATION_API_URL}?apiKey=${LOCATION_API_KEY}&fields=geo`);
+    console.log("geoResponse:",geoResponse.data);
 
     const geoData = geoResponse.data;
     const { latitude, longitude, city } = geoData;
