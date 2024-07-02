@@ -40,6 +40,7 @@ try {
 
     // Get weather information
     const weatherResponse = await axios.get(`${WEATHER_API_URL}?lat=${latitude}&lon=${longitude}&units=metric&appid=${WEATHER_API_KEY}`);
+    console.log("weatherResponse:",weatherResponse.data);
 
 
     const temperature = weatherResponse.data.main.temp;
