@@ -5,7 +5,7 @@ const _ = require('dotenv').config();
 const app = express();
 
 
-const port = process.env.port;
+const port = process.env.por || 8000;
 
 const LOCATION_API_KEY = process.env.LOCATION_API_KEY;
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
