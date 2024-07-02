@@ -22,10 +22,10 @@ app.get('/', async (req, res) => {
     // const clientIp = forwarded ? forwarded.split(/, /)[0] : req.connection.remoteAddress;
     const forwarded = req.headers['x-forwarded-for'];
     const clientIp = forwarded ? forwarded.split(/, /)[0] : req.connection.remoteAddress;
-    const location = await axios.get(`${LOCATION_API_URL}?apiKey=${LOCATION_API_KEY}&ipAddress
-        =${clientIp}`
-        );
-        console.log("location:",location)
+    // const location = await axios.get(`${LOCATION_API_URL}?apiKey=${LOCATION_API_KEY}&ipAddress
+    //     =${clientIp}`
+    //     );
+    //     console.log("location:",location)
    
 console.log("clientIp:",clientIp);
    
@@ -55,7 +55,7 @@ try {
 
     return res.status(200).json({
         client_ip: clientIp,
-        location: location || city || 'Unknown',
+        location: city || 'Unknown',
         greeting: `Hello, ${visitorName}! The temperature is ${temperature} degrees Celsius in ${city || 'Unknown'}`
     });
 
