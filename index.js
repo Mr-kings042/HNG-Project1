@@ -25,7 +25,7 @@ console.log("clientIp:",clientIp);
 
 try {
       // Get location based on IP
-    const geoResponse = await axios.get(`${LOCATION_API_URL}?apiKey=${LOCATION_API_KEY}&fields=geo`);
+    const geoResponse = await axios.get(`${LOCATION_API_URL}?apiKey=${LOCATION_API_KEY}&fields=city`);
     console.log("geoResponse:",geoResponse.data);
 
     const geoData = geoResponse.data;
