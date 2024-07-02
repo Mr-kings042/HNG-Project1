@@ -17,7 +17,7 @@ const WEATHER_API_URL = process.env.WEATHER_API_URL;
 
 app.get('/', async (req, res) => {
     const visitorName = req.query.visitor_name || 'Dear';
-    const clientIp = req.headers['x-forwarded-for'];
+    const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
    
 console.log("clientIp:",clientIp);
    
