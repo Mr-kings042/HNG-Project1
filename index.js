@@ -18,8 +18,14 @@ const WEATHER_API_URL = process.env.WEATHER_API_URL;
 app.get('/', async (req, res) => {
     const visitorName = req.query.visitor_name || 'Dear';
     // const clientIp = req.ip;
-    const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    // const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     // const clientIp = forwarded ? forwarded.split(/, /)[0] : req.connection.remoteAddress;
+    const forwarded = req.headers['x-forwarded-for'];
+    const clientIp = forwarded ? forwarded.split(/, /)[0] : req.connection.remoteAddress;
+    const location = await axios.get(`${LOCATION_API_URL}?apiKey=${LOCATION_API_KEY}&ipAddress
+        =${clientIp}`
+        );
+        console.log("location:",location)
    
 console.log("clientIp:",clientIp);
    
@@ -27,7 +33,7 @@ console.log("clientIp:",clientIp);
 
 try {
       // Get location based on IP 
-    const geoResponse = await axios.get(`${LOCATION_API_URL}?apiKey=${LOCATION_API_KEY}&ip=${clientIp}&field=geo`);
+    const geoResponse = await axios.get(`${LOCATION_API_URL}?apiKey=${LOCATION_API_KEY}&ipAddress=${clientIp}&field=geo`);
     console.log("geoResponse:",geoResponse.data);
 
     const geoData = geoResponse.data;
@@ -49,7 +55,7 @@ try {
 
     return res.status(200).json({
         client_ip: clientIp,
-        location: city || 'Unknown',
+        location: location || city || 'Unknown',
         greeting: `Hello, ${visitorName}! The temperature is ${temperature} degrees Celsius in ${city || 'Unknown'}`
     });
 
