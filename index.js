@@ -16,16 +16,10 @@ const WEATHER_API_URL = process.env.WEATHER_API_URL;
 
 
 app.get('/', async (req, res) => {
-    const visitorName = req.query.visitor_name || 'Dear';
-    // const clientIp = req.ip;
-    // const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    // const clientIp = forwarded ? forwarded.split(/, /)[0] : req.connection.remoteAddress;
-    const forwarded = req.headers['x-forwarded-for'];
-    const clientIp = forwarded ? forwarded.split(/, /)[0] : req.connection.remoteAddress;
-    // const location = await axios.get(`${LOCATION_API_URL}?apiKey=${LOCATION_API_KEY}&ipAddress
-    //     =${clientIp}`
-    //     );
-    //     console.log("location:",location)
+const visitorName = req.query.visitor_name || 'Dear';
+const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req
+.socket.remoteAddress || req.clientIp;
+
    
 console.log("clientIp:",clientIp);
    
