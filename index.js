@@ -17,10 +17,10 @@ app.use(requestIp.mw());
 
 app.get('/api/hello', async (req, res) => {
 const visitorName = req.query.visitor_name || 'Dear';
-// const clientIp = req.headers['x-forwarded-for'];
-//  || req.connection.remoteAddress || req
-// .socket.remoteAddress;
-const clientIp = req.clientIp;
+const clientIp = req.headers['x-forwarded-for']
+ || req.connection.remoteAddress || req
+.socket.remoteAddress || req.clientIp;
+
 
    
 console.log("clientIp:",clientIp);
@@ -30,9 +30,11 @@ console.log("clientIp:",clientIp);
 try {
       // Get location based on IP 
     const geoResponse = await axios.get(`${LOCATION_API_URL}?apiKey=${LOCATION_API_KEY}&ipAddress=${clientIp}&field=geo`);
+
     console.log("geoResponse:",geoResponse.data);
 
     const geoData = geoResponse.data;
+    console.log("geoData:",geoData);
     const { latitude, longitude, city } = geoData;
 
  //To validate longitude and latitude
